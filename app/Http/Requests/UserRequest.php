@@ -30,4 +30,9 @@ class UserRequest extends FormRequest
             'introduction' => 'max:80',
         ];
     }
+
+    public function message()
+    {
+
+    }
 }
