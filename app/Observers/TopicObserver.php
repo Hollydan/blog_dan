@@ -19,9 +19,12 @@ class TopicObserver
         //
     }
 
-    //进行save操作时生成摘要信息
     public function saving(Topic $topic)
     {
+        //进行save操作时生成摘要信息
         $topic->excerpt = make_excerpt($topic->body);
+
+        //对文章内容xss过滤
+        $topic->body = clean($topic->body, 'user_topic_body');
     }
 }
