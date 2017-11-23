@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Handlers\ImageUploadHandler;
 use App\Models\Category;
 use App\Models\Topic;
 use Illuminate\Http\Request;
@@ -11,12 +12,20 @@ use Auth;
 
 class TopicsController extends Controller
 {
+    /**
+     * TopicsController constructor.
+     */
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
-	public function index(Request $request, Topic $topic)
+    /**
+     * @param Request $request
+     * @param Topic $topic
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(Request $request, Topic $topic)
 	{
 		$topics = $topic->withOrder($request->order)->paginate();
 		return view('topics.index', compact('topics'));
@@ -27,13 +36,22 @@ class TopicsController extends Controller
         return view('topics.show', compact('topic'));
     }
 
-	public function create(Topic $topic)
+    /**
+     * @param Topic $topic
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function create(Topic $topic)
 	{
 	    $categories = Category::all();
 		return view('topics.create_and_edit', compact('topic', 'categories'));
 	}
 
-	public function store(TopicRequest $request, Topic $topic)
+    /**
+     * @param TopicRequest $request
+     * @param Topic $topic
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(TopicRequest $request, Topic $topic)
 	{
 		$topic->fill($request->all());
 		$topic->user_id = Auth::id();
@@ -61,5 +79,36 @@ class TopicsController extends Controller
 		$topic->delete();
 
 		return redirect()->route('topics.index')->with('message', 'Deleted successfully.');
+	}
+
+    /**
+     * 编辑器中上传图片
+     *
+     * @param Request $request
+     * @param ImageUploadHandler $uploader
+     * @return array
+     */
+	public function uploadImage(Request $request, ImageUploadHandler $uploader)
+    {
+        $data = [
+            'success' => false,
+            'msg' => '上传失败',
+            'file_path' => '',
+        ];
+
+        //判断是否有文件上传
+        if ($file = $request->upload_file) {
+
+            //保存图片到本地
+            $result = $uploader->save($request->upload_file, 'topics', \Auth::id(), 1024);
+
+            //如果图片保存成功
+            if ($result) {
+                $data['file_path'] = $result['path'];
+                $data['msg'] = '上传成功';
+                $data['success'] = true;
+            }
+        }
+        return $data;
 	}
 }
