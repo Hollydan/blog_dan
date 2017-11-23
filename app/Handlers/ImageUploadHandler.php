@@ -8,9 +8,7 @@
 
 namespace App\Handlers;
 
-
-use function foo\func;
-use Intervention\Image\Image;
+use Image;
 
 class ImageUploadHandler
 {
