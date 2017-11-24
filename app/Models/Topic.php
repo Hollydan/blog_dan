@@ -16,6 +16,7 @@ class Topic extends Model
         return $this->belongsTo(User::class);
     }
 
+    //滑梯排序
     public function scopeWithOrder($query, $order)
     {
         switch ($order) {
@@ -39,5 +40,11 @@ class Topic extends Model
     public function scopeRecentReplied($query)
     {
         return $query->orderBy('updated_at', 'desc');
+    }
+
+    //重构 show 路由
+    public function link($params = [])
+    {
+        return route('topics.show', array_merge([$this->id, $this->slug]), $params);
     }
 }

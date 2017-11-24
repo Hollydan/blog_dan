@@ -57,7 +57,6 @@
                                 <i class="glyphicon glyphicon-trash"></i> 删除
                             </button>
                         </form>
-
                     </div>
                     @endcan
 
