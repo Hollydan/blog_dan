@@ -83,7 +83,11 @@ class TopicsController extends Controller
 		return redirect()->route('topics.show', $topic->id)->with('message', '文章更新成功！');
 	}
 
-	public function destroy(Topic $topic)
+    /**
+     * @param Topic $topic
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Topic $topic)
 	{
 		$this->authorize('destroy', $topic);
 		$topic->delete();
