@@ -2,84 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Reply;
-use Illuminate\Http\Request;
+use App\Http\Requests\ReplyRequest;
+use App\Models\Reply;
+use Auth;
 
 class ReplyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function __construct()
     {
-        //
+        $this->middleware('auth');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(ReplyRequest $request, Reply $reply)
     {
-        //
+        $reply->content = $request->content;
+        $reply->user_id = Auth::id();
+        $reply->topic_id = $request->topic_id;
+        $reply->save();
+
+        return redirect()->to($reply->topic->link())->with('success', '创建成功！');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Reply  $reply
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Reply $reply)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Reply  $reply
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Reply $reply)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Reply  $reply
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Reply $reply)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Reply  $reply
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Reply $reply)
     {
-        //
+        dd($reply->topic);
+        $this->authorize('destroy', $reply);
+        $reply->delete();
+
+        return redirect()->route('replies.index')->with('success', '删除成功！');
     }
 }
