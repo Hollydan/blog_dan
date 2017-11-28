@@ -63,7 +63,7 @@ class User extends Authenticatable
     //通知状态设定为已读
     public function markAsRead()
     {
-        $this->notifications_count = 0;
+        $this->notification_count = 0;
         $this->save();
         $this->unreadNotifications();
     }
