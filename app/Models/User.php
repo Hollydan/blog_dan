@@ -11,6 +11,7 @@ class User extends Authenticatable
     use Notifiable {
         notify as protected laravelNotify;
     }
+
     public function notify($instance)
     {
         // 如果要通知的人是当前用户，就不必通知了！
@@ -57,5 +58,13 @@ class User extends Authenticatable
     public function isAuthorOf($model)
     {
         return $model->user_id == $this->id;
+    }
+
+    //通知状态设定为已读
+    public function markAsRead()
+    {
+        $this->notifications_count = 0;
+        $this->save();
+        $this->unreadNotifications();
     }
 }

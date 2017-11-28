@@ -10,6 +10,8 @@ class TopicReplied extends Notification
 {
     use Queueable;
 
+    public $reply;
+
     /**
      * Create a new notification instance.
      *

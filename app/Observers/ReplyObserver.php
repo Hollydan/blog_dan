@@ -25,6 +25,7 @@ class ReplyObserver
     {
         $topic = $reply->topic;
 
+        //创建评论后，评论数加 1
         $topic->increment('reply_count', 1);
 
         //如果评论的作者不是话题作者，则推送通知消息
