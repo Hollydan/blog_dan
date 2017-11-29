@@ -30,7 +30,7 @@ class ReplyObserver
 
         //如果评论的作者不是话题作者，则推送通知消息
         if (! $reply->user->isAuthorOf($topic)) {
-            $topic->user->notify(new TopicReplied($reply));
+            //$topic->user->notify(new TopicReplied($reply));
         }
     }
 

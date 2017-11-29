@@ -14,10 +14,12 @@ class TranslateSlug implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $topic;
+
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param Topic $topic
      */
     public function __construct(Topic $topic)
     {

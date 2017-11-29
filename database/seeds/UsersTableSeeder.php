@@ -40,11 +40,11 @@ class UsersTableSeeder extends Seeder
         User::insert($user_array);
 
         //初始化用户角色，1 号用户设为站长
-        $user = User::find(1);
+        $user = User::find(11);
         $user->assignRole('Founder');
 
         // 2 号用户为管理员
-        $user = User::find(2);
+        $user = User::find(12);
         $user->assignRole('Maintainer');
     }
 }
