@@ -77,6 +77,9 @@ return array(
             'topics',
             'replies',
         ],
+        '站点管理' => [
+            'settings.site',
+        ],
     ],
 
     /*
@@ -99,7 +102,7 @@ return array(
      *
      * @type bool
      */
-    'use_dashboard' => true,
+    'use_dashboard' => false,
 
     /*
      * 后台主页视图文件，由 `use_dashboard` 选项决定
