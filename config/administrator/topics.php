@@ -39,7 +39,7 @@ return [
             'title'    => '分类',
             'sortable' => false,
             'output'   => function ($value, $model) {
-                return model_admin_link($model->category->name, $model->category);
+                return model_admin_link(e($model->category->name), $model->category);
             },
         ],
         'reply_count' => [

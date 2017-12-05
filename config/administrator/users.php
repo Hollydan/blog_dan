@@ -38,7 +38,7 @@ return [
 
             // 默认情况下会直接输出数据，你也可以使用 output 选项来定制输出内容
             'output' => function ($avatar, $model) {
-                return empty($avatar) ? 'N/A' : '<img src="'.$avatar.'" width="40">';
+                return empty($avatar) ? $model->name : '<img src="'.$avatar.'" width="40">';
             },
 
             // 是否允许排序

@@ -71,8 +71,14 @@ class User extends Authenticatable
         $this->unreadNotifications();
     }
 
+    /**
+     * @param $value
+     */
     public function setPasswordAttribute($value)
     {
+        //如果提交的密码为空，不作处理
+        if (is_null($value) || empty($value)) return;
+
         if (strlen($value) != 60) {
             $value = bcrypt($value);
         }
@@ -80,8 +86,12 @@ class User extends Authenticatable
         $this->attributes['password'] = $value;
     }
 
+    /**
+     * @param $path
+     */
     public function setAvatarAttribute($path)
     {
+        //如果不是 http 开头，需要不全图片路径
         if (! starts_with($path, 'http')) {
             $path = config('app.url') . '/uploads/images/avatars/' . $path;
         }
