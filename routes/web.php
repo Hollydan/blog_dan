@@ -47,3 +47,6 @@ Route::resource('notifications', 'NotificationsController', ['only' => ['index']
 
 //uploadImage
 Route::post('upload_image', 'TopicsController@uploadImage')->name('topics.upload_image');
+
+//无权限提醒
+Route::get('permission-denied', 'PagesController@permissionDenied')->name('permission-denied');
