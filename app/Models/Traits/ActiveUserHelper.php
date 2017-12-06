@@ -112,7 +112,7 @@ trait ActiveUserHelper
         // 并加以缓存
         $this->cacheActiveUsers($active_users);
     }
-
+.
     private function cacheActiveUsers($active_users)
     {
         // 将数据放入缓存中
