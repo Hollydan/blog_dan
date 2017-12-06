@@ -17,7 +17,7 @@ use Carbon\Carbon;
 trait ActiveUserHelper
 {
     //存放临时用户数据
-    protected $user = [];
+    protected $users = [];
 
     //配置信息
     protected $topic_weight = 4;    //话题权重
