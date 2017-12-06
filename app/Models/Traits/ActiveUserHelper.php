@@ -31,10 +31,18 @@ trait ActiveUserHelper
 
     public function getActiveUsers()
     {
-        //从缓存中取出 cache_key
+        //从缓存中取出 cache_key，能取到则直接返回；取不到就运行匿名函数取出活跃用户数据
         return Cache::remember($this->cache_key, $this->cache_expire_in_minutes, function () {
             return $this->calculateActiveUsers();
         });
+    }
+
+    public function calculateAndCacheActiveUsers()
+    {
+        // 取得活跃用户列表
+        $active_users = $this->getActiveUsers();
+        // 并加以缓存
+        $this->cacheActiveUsers($active_users);
     }
 
     private function calculateActiveUsers()
@@ -105,14 +113,6 @@ trait ActiveUserHelper
         }
     }
 
-    public function calculateAndCacheActiveUsers()
-    {
-        // 取得活跃用户列表
-        $active_users = $this->calculateActiveUsers();
-        // 并加以缓存
-        $this->cacheActiveUsers($active_users);
-    }
-.
     private function cacheActiveUsers($active_users)
     {
         // 将数据放入缓存中
