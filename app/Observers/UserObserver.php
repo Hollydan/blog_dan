@@ -18,4 +18,16 @@ class UserObserver
     {
         //
     }
+
+    /**
+     * 设置默认头像
+     *
+     * @param User $user
+     */
+    public function saving(User $user)
+    {
+        if (empty($user->avatar)) {
+            $user->avatar = 'https://fsdhubcdn.phphub.org/uploads/images/201710/30/1/TrJS40Ey5k.png';
+        }
+    }
 }
