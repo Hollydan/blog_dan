@@ -17,6 +17,8 @@ class Kernel extends ConsoleKernel
     ];
 
     /**
+     * 任务调度
+     *
      * Define the application's command schedule.
      *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
@@ -26,6 +28,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        //每隔一小时执行一次
+        $schedule->command('larabbs:calculate-active-user')->hourly();
+        //每日零时执行一次
+        $schedule->command('larabbs:sync-user-actived-at')->dailyAt('00:00');
     }
 
     /**

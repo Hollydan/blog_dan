@@ -9,8 +9,10 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+    //活跃用户
     use Traits\ActiveUserHelper;
-
+    //用户最后登录时间
+    use Traits\LastActivedAtHelper;
     use HasRoles;
 
     use Notifiable {
